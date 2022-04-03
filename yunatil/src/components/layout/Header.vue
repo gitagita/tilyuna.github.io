@@ -1,7 +1,7 @@
 <template>
-<div>
+<div class="header_nav">
   <b-navbar class="nav_bar" toggleable="lg" variant="faded" type="light">
-    <b-navbar-brand class="title" href="#">YunaTil</b-navbar-brand>
+    <b-navbar-brand class="title" href="/">YunaTil</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -24,10 +24,7 @@
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
-  <div>
-    <h1 class="sub_title">Today I Learned</h1>
-    <img class="view_img" src="./../../assets/img/bg-masthead.jpg" alt="..." />
-  </div>
+  <h1 class="sub_title">Today I Learned</h1>
 </div>
 </template>
 
@@ -38,10 +35,16 @@ export default {
 </script>
 
 <style>
-.nav_bar{
-  z-index: 10;
+.header_nav {
+  background-image: url(./../../assets/img/bg-masthead.jpg);
+  background-size: 100%;
+  width: 100%;
+  height: 300px;
+  border: 2px solid;
+  color: pink;
 }
 .sub_title{
+  margin: 50px 20px;
   color: white;
 }
 .view_img{
@@ -50,7 +53,6 @@ export default {
   margin: 0;
   padding: 0;
   top:0;
-  z-index:1;
 }
 .title{
   margin-left: 20px;
