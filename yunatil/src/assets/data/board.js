@@ -1,14 +1,16 @@
 export default [{
-    id : 0,
-    type: "work",
-    title: "20220329",
-    code: "controller",
-    content: "사조씨푸드에서 작업했던 내용을 기반으로 레이델 작업을 진행했다."
+    type: "tip",
+    key:"고도몰",
+    title: "SESSION",
+    code: "$memNo = \\Session::get('member.memNo');",
+    content: "로그인한 회원 정보는 SESSION에 있다. 로그인한 회원 정보를 사용할 때는 sesion에서 가져다 쓰자.",
+    regDt: "2022.04.05"
 },
 {
-    id : 1,
     type: "tip",
-    title: "DB에 로그찍는 방법",
-    code: "<code>$logData = []; \n $logData['CHECK'] = '1'; \n $dbkLog = \\App::load('\\Component\\Dbk\\DbkLog'); \n $dbkLog->setInsertLog('DbkEventWidget-kind = '.$kind, $logData</code>",
-    content: "$logData 변수에 확인하고 싶은 데이터 값을 삽입한다."
+    key:"고도몰",
+    title: "로그로 데이터 찍어보기",
+    code: "<pre>$dbkLog = \\App::load('\\Component\\Dbk\\DbkLog');\n$logData = [];;\n$logData['arrData'] = $arrData;;\n//DbkLog 테이블에 내용이 insert된다.;\n$dbkLog->setInsertLog('setInsertLike',$logData);;\nunset($dbkLog, $logData);</pre>",
+    content: "DbkLog Component  파일의 setInsertLog함수에서 log값을 db에 저장한다.",
+    regDt: "2022.04.05"
 }];

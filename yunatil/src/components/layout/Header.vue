@@ -1,5 +1,5 @@
 <template>
-<div class="header_nav">
+<div class="header_nav english">
   <b-navbar class="nav_bar" toggleable="lg" variant="faded" type="light">
     <b-navbar-brand class="title" href="/">YunaTil</b-navbar-brand>
 
@@ -9,14 +9,14 @@
       <b-navbar-nav class="ml-auto">
         <b-navbar type="light" >
             <b-form-input class="mr-sm-2" size="sm"  placeholder="Search"></b-form-input>
-            <b-button variant="outline-success" size="sm"  class="my-2 my-sm-0" type="submit">Search</b-button>
+            <b-button variant="outline-dark" size="sm" class="search_btn" type="submit">Search</b-button>
         </b-navbar>
 
         <b-nav-item-dropdown right>
           <template #button-content>
-            <em>메뉴</em>
+            <em class="hangul">메뉴</em>
           </template>
-          <b-dropdown-item href="#">고도몰</b-dropdown-item>
+          <b-dropdown-item class="hangul" href="#">고도몰</b-dropdown-item>
           <b-dropdown-item href="#">Vue</b-dropdown-item>
           <b-dropdown-item href="#">React</b-dropdown-item>
           <b-dropdown-item href="#">Node.js</b-dropdown-item>
@@ -35,17 +35,27 @@ export default {
 </script>
 
 <style>
-.header_nav {
+@import url('https://fonts.googleapis.com/css2?family=Acme&family=Do+Hyeon&family=Hi+Melody&display=swap');.header_nav {
   background-image: url(./../../assets/img/bg-masthead.jpg);
   background-size: 100%;
   width: 100%;
   height: 300px;
   border: 2px solid;
-  color: pink;
+}
+.hangul{
+  font-family: 'Hi Melody', cursive;
+  font-size: 20px;
+}
+.hangul_title{
+  font-family: 'Do Hyeon', sans-serif;
+}
+.english{
+  font-family: 'Acme', sans-serif;
 }
 .sub_title{
   margin: 50px 20px;
-  color: white;
+  font-size: 60px;
+  text-shadow: 3px 3px #f0f0f0;
 }
 .view_img{
   width: 100%;
