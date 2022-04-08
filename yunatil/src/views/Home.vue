@@ -1,8 +1,5 @@
 <template>
 <div>
-    <div>
-        <b-badge pill variant="primary">Primary</b-badge>
-    </div>
   <div class="card_group_list">
     <b-card-group deck class="card_group" >
       <b-card v-for="(value, index) in board" :key="index" :header="value.title"  class="text-center hangul_title">
@@ -41,6 +38,10 @@ export default {
 
 	
 @media (max-width: 991.5px) {
+  .card_group_list{
+    width: 100%;
+    margin: 0;
+  }
   .card{
     width: 100%;
     margin-bottom: 5px;
