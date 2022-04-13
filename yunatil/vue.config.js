@@ -1,10 +1,4 @@
-// const { defineConfig } = require('@vue/cli-service')
-// module.exports = defineConfig({
-//   transpileDependencies: true
-// })
-
-
-module.exports = {
-  publicPath: '/yunatil',
-  outputDir: 'docs'
-}
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true
+})

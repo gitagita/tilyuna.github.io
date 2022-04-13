@@ -3,7 +3,7 @@
 ## Project setup
 ```
 npm install
-npm install vue bootstrap bootstrap-vue
+npm install vue
 ```
 
 ### Compiles and hot-reloads for development
