@@ -1,12 +1,13 @@
 <template>
-<div>
-  <div class="card_group_list">
-    <b-card-group deck class="card_group" >
-      <b-card v-for="(value, index) in board" :key="index" :header="value.title"  class="text-center hangul_title">
-        <b-card-text class="hangul">{{value.content}}</b-card-text>
-        <div><code v-html="value.code"></code></div>
-      </b-card>
-    </b-card-group>
+<div class="list_contents">
+  <div class="card_group_list" v-for="(value, index) in board" :key="index">
+    <div>
+      <div class="hangul_title">
+        <strong>{{value.title}}</strong>
+        <div class="hangul">{{value.content}}</div>
+      </div>
+      <div class="ynkCode" v-if="!(value.code=='<pre></pre>')"><code v-html="value.code"></code></div>
+    </div>
   </div>
 </div>
 </template>
@@ -20,32 +21,38 @@ export default {
   },
   methods: {}
 };
+
 </script>
 <style scoped>
 .card_group_list{
-  width: 100%;
-  margin: 0 10px 0 10px;
+  width: 48%;
+  padding: 10px 10px;
+  display: inline-block;
+} 
+.ynkCode{
+  height: 130px;
+  padding: 10px;
+  overflow-x: scroll;
+  background: #343434;
 }
-.card_group{
-  margin: 0 10px 0 10px;
+.ynkCode::-webkit-scrollbar{
+  height:7px;
+  width: 7px;
 }
-.card{
-  width: 50%;
-  height: 240px;
-  margin-bottom: 5px;
-  float: left;
+.ynkCode::-webkit-scrollbar-thumb{
+  background-color: rgb(186, 80, 80);
 }
-
+.ynkCode::-webkit-scrollbar-track{
+  background-color: #5b5959;
+}
+.ynkCode code{
+  color:rgb(158, 93, 93);
+}
 	
-@media (max-width: 991.5px) {
+@media (max-width: 1032px) {
   .card_group_list{
     width: 100%;
     margin: 0;
-  }
-  .card{
-    width: 100%;
-    margin-bottom: 5px;
-    display: block;
   }
 }
 </style>
