@@ -3,10 +3,7 @@
   <b-navbar class="nav_bar" toggleable="lg" variant="faded" type="light">
     <strong class="title" href="/">YunaTil</strong>
     <div>
-      <div>
-          <input type="text"  placeholder="Search">
-          <button variant="outline-dark" size="sm" class="search_btn" type="submit">Search</button>
-      </div>
+      
 
         <div class="hangul">메뉴</div>
         <select>
