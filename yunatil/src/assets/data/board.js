@@ -61,4 +61,20 @@ export default [{
     code: "<pre>if ($this->search['key'] && $this->search['keyword']) {\n	if($this->search['key'] == 'areaNm' || $this->search['key'] == 'shopNm') {\n		$this->arrWhere[] = 'c.' . $this->search['key'] . ' LIKE concat(\\'%\\',?,\\'%\\') ';\n		$this->db->bind_param_push($this->arrBind, 's', $this->search['keyword']);\n	}\n    }\nif ($this->search['key'] == 'contact'){\n	$this->arrWhere[] = 'c.' . $this->search['key'] . ' LIKE concat(\\'%\\',?,\\'%\\') ';\n	$this->db->bind_param_push($this->arrBind, 's', $this->search['keyword']);\n}\n</pre>",
     content: "이슈: 전화번호로 0을 검색했을 때 모든 연락처 리스트가 나오는 결과가 있었다. $this->search['keyword']의 값이 0인 경우 해당 if문 안에 들어가지 않았다. 0을 false로 인식했기 때문이다. 그래서 contact부분만 if문 밖으로 따로 빼주었다.",
     regDt: "2022.04.13"
+},
+{
+    type: "tip",
+    key:"고도몰",
+    title: "Controller에서 페이지 redirect",
+    code: "<pre>$this->redirect('/goods/goods_view.php?goodsNo=' . Request::get()->get('goodsNo'));</pre>",
+    content: "",
+    regDt: "2022.04.14"
+},
+{
+    type: "tip",
+    key:"고도몰",
+    title: "CommonController",
+    code: "<pre>if ($this->search['key'] && $this->search['keyword']) {\n	if($this->search['key'] == 'areaNm' || $this->search['key'] == 'shopNm') {\n		$this->arrWhere[] = 'c.' . $this->search['key'] . ' LIKE concat(\\'%\\',?,\\'%\\') ';\n		$this->db->bind_param_push($this->arrBind, 's', $this->search['keyword']);\n	}\n    }\nif ($this->search['key'] == 'contact'){\n	$this->arrWhere[] = 'c.' . $this->search['key'] . ' LIKE concat(\\'%\\',?,\\'%\\') ';\n	$this->db->bind_param_push($this->arrBind, 's', $this->search['keyword']);\n}\n</pre>",
+    content: "전제 페이지에서 사용할 수 있는 Controller\nstand.html은 컨트롤러가 없음 그래서 CommonController를 사용해서 데이터를 가져와서 써야함",
+    regDt: "2022.04.14"
 }];
