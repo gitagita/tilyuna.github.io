@@ -1,10 +1,8 @@
 <template>
 <div class="header_nav english">
   <b-navbar class="nav_bar" toggleable="lg" variant="faded" type="light">
-    <strong class="title" href="/">YunaTil</strong>
-    <div>
-      
-
+    <div class="ynkTitle"><a href="/"><strong class="title" >YunaTil</strong></a></div>
+    <!-- <div>
         <div class="hangul">메뉴</div>
         <select>
           <option>고도몰</option>
@@ -12,7 +10,7 @@
           <option>React</option>
           <option>Node.js</option>
         </select>
-    </div>
+    </div> -->
   </b-navbar>
   <h1 class="sub_title">Today I Learned</h1>
 </div>
@@ -20,7 +18,7 @@
 
 <script>
 export default {
-    name: "header",
+  name: "header",
 };
 </script>
 
@@ -48,7 +46,7 @@ export default {
   position: absolute;
   top: 50px;
   margin: 50px 20px;
-  font-size: 40px;
+  font-size: 60px;
   text-shadow: 3px 3px #f0f0f0;
 }
 .view_img{
@@ -60,5 +58,13 @@ export default {
 }
 .title{
   margin-left: 20px;
+}
+a{
+  text-decoration: none;
+  color: black;
+  font-size: 20px;
+}
+.ynkTitle{
+  padding-top: 14px;
 }
 </style>

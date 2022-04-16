@@ -40,7 +40,7 @@
         {
           "ignores": [
             "Home",
-            "About",
+            "View",
             "header"
           ]
         }

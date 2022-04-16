@@ -6,16 +6,16 @@
   <div class="card_group_list" v-for="(value, index) in board" :key="index">
     <div class="card_contents">
       <div class="hangul_title">
-        <div>
+        <div class="click_view" @click="getView(value)">
           <strong class="ynkTitle">{{value.title}}    </strong>
           <span class="ynkType hangul">{{value.type}}</span>
         </div>
-        <div>
+        <div class="list_contents">
           <span class="ynkKey hangul">[{{value.key}}]  </span>
           <span class="ynkContent hangul">{{value.content}}</span>
         </div>
       </div>
-      <div class="ynkCode" v-if="!(value.code=='<pre></pre>')"><code v-html="value.code"></code></div>
+      <!-- <div class="ynkCode" v-if="!(value.code=='<pre></pre>')"><code v-html="value.code"></code></div> -->
     </div>
   </div>
 </div>
@@ -45,11 +45,14 @@ export default {
 
         if(keyword[0].innerHTML.toUpperCase().indexOf(value) > -1){
           item[i].style.display = "flex";
+          item[i].style.display = "inline-block";
         } else{
           item[i].style.display = "none";
         }
       }
-    }
+    },getView(board) {
+      this.$router.push({name: 'View', params: {board: board}})
+    },
   }
 };
 </script>
@@ -57,7 +60,11 @@ export default {
 .card_group_list{
   width: 48%;
   padding: 10px 10px;
-  display: inline-block;
+  /* display: inline-block; */
+  float: left;
+}
+.card_contents{
+  width: 100%;
 }
 .ynkType{
   background: #d78b7d;
@@ -65,7 +72,14 @@ export default {
   padding: 2px;
   font-weight: 700;
 }
+.list_contents{
+  /* width: 200px; */
+  overflow: hidden;
+  white-space : nowrap;
+  text-overflow: ellipsis;
+}
 .ynkCode{
+  width: 98%;
   height: 130px;
   padding: 10px;
   overflow-x: scroll;
@@ -83,6 +97,9 @@ export default {
 }
 .ynkCode code{
   color: #9E5D5D;
+}
+.click_view:hover{
+  background:#ffeae7;
 }
 	
 @media (max-width: 1032px) {
