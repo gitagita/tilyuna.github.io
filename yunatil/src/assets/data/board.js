@@ -93,7 +93,7 @@ export default [{
     code:"<pre>window.open(protocol + '//hpauthdream.godo.co.kr/module/Mobile_hpauthDream_Main.php?callType=joinmembermobile&shopUrl=' + callbackUrl + '&cpid={=authDataCpCode}&i=1', 'uth_popup', 'top=30, left=50, status=0, width=425, height=650');\n</pre>",
     content: "결론: &i=1를 경로에 넣어주어야 동작했음",
     regDt: "2022.04.18"
-},,
+},
 {
     type: "error",
     key:"고도몰",
@@ -101,4 +101,20 @@ export default [{
     code: "",
     content: "고도몰 [회원 > 회원 관리 > 회원 가입 항목 관리] 에서 페이지에 없는 항목이 사용으로 체크되어 있지 않는지 확인 ",
     regDt: "2022.04.18"
+},
+{
+    type: "tip",
+    key:"php",
+    title: "explode함수",
+    code: "<pre>$snoData = explode('|', $tmpSno);</pre>",
+    content: "foreach로 join함수 돌리지 말고 explode함수로 해결하자",
+    regDt: "2022.04.24"
+},
+{
+    type: "tip",
+    key:"git",
+    title: "git ssh로 clone하기",
+    code: "",
+    content: "1. git 설치하기\n\n2. 사용자 이름 및 이메일 설정하기레파지토리에 커밋하고 푸시하기 위해 필요함) \n\ngit config --global user.name '사용자 이름'\ngit config --global user.email '사용자 이메일'\n\n3. ssh-keygen 사용하기\nssh-keygen -t rsa\n\nC:\\Users\\[사용자계정]\\.ssh 폴더에 id_dsa.pub 파일의 내용(공개키)을 복사해 git레파지토리 ssh공개키로 설정한다.\n(필요에 따라 해당 폴더에 config파일을 삽입한다.)\n\n4. 레파지토리의 ssh 주소 복사 후 \ngit clone [복사한 ssh주소]",
+    regDt: "2022.04.24"
 }];
