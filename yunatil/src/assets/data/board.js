@@ -115,6 +115,22 @@ export default [{
     key:"git",
     title: "git ssh로 clone하기",
     code: "",
-    content: "1. git 설치하기\n\n2. 사용자 이름 및 이메일 설정하기레파지토리에 커밋하고 푸시하기 위해 필요함) \n\ngit config --global user.name '사용자 이름'\ngit config --global user.email '사용자 이메일'\n\n3. ssh-keygen 사용하기\nssh-keygen -t rsa\n\nC:\\Users\\[사용자계정]\\.ssh 폴더에 id_dsa.pub 파일의 내용(공개키)을 복사해 git레파지토리 ssh공개키로 설정한다.\n(필요에 따라 해당 폴더에 config파일을 삽입한다.)\n\n4. 레파지토리의 ssh 주소 복사 후 \ngit clone [복사한 ssh주소]",
+    content: "1. git 설치하기<br/><br/>2. 사용자 이름 및 이메일 설정하기레파지토리에 커밋하고 푸시하기 위해 필요함) <br/><br/>git config --global user.name '사용자 이름'<br/>git config --global user.email '사용자 이메일'<br/><br/>3. ssh-keygen 사용하기<br/>ssh-keygen -t rsa<br/><br/>C:\\Users\\[사용자계정]\\.ssh 폴더에 id_dsa.pub 파일의 내용(공개키)을 복사해 git레파지토리 ssh공개키로 설정한다.<br/>(필요에 따라 해당 폴더에 config파일을 삽입한다.)<br/><br/>4. 레파지토리의 ssh 주소 복사 후 <br/>git clone [복사한 ssh주소]",
     regDt: "2022.04.24"
+},
+{
+    type: "tip",
+    key:"네이버지도APi",
+    title: "마커 지우기",
+    code: "<pre>var dbkMarker = {=json_encode(markerData)};\nvar dbkAreaNmList = {=json_encode(areaNmList)};\nvar dbkThisFl = '{dbkThisFl}';\nvar postionY = 37.534286;\nvar postionX = 127.0396037;\nvar dbkPointMaker = [];\n//마커 제거\nif(dbkPointMaker){\n	dbkPointMaker.setMap(null);\n}\nfunction showPosition(position) {\n	if(dbkThisFl == 'y') {\n		postionY = position.coords.latitude;\n		postionX = position.coords.longitude;\n	}\n	var oPoint3 = new naver.maps.LatLng(postionY, postionX);\n	map.setCenter(oPoint3);\n	let marker = new naver.maps.Marker({\n		position: oPoint3,\n		map: map\n	});\n	dbkPointMaker[0] = marker;\n	<!--{ ? gd_isset(markerData) }-->\n		<!--{ @ markerData }-->\n			getLatLon('{=.address} {=.addressSub} ',' {=.shopNm} ','{=.sno}','{=.contact}');\n		<!--{ / }-->\n	<!--{ / }-->\n	setTimeout(function(){\n		dbkMarker.sort(function(a,b){\n			return a.sort - b.sort;\n		});\n		// console.log(typeof(dbkMarker));\n		dbkCreateLi();\n		\n	}, 800);\n}</pre>",
+    content: "dbkPointMaker.setMap(null); 이 마커 하나를 지우는 함수이다.",
+    regDt: "2022.04.26"
+},
+{
+    type: "tip",
+    key:"네이버지도APi",
+    title: "마커 위에 숫자 표시하기",
+    code: "<pre>const tmpIndex = parseInt(index)+1;\nvar marker = new naver.maps.Marker({\n	position: oPoint2,\n	map: map,\n	title:tit,\n	zIndex:MarkerCnt,\n	icon: {\n		content: '<#div><#img src='../img/map/pin_default.png' alt='' ' +\n				 'style='margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none;' +\n				 '-webkit-user-select: none; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;'>' +\n				 '<#span class='shd' style='z-index:10; color: #ff8888; text-align: center; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;'>'+tmpIndex+'<#span></#div>'\n		}\n});</pre>",
+    content: "네이버 지도 api에 숫자가 표시된 마커를 제공하고 있었다. 그런데 숫자가 8까지 밖에 제공하고 있지 않았다. 마커 이미지와 숫자가 분리되지 않고 숫자 마커 자체가 이미지로 되어 있었다.<br/>개발 사항에서는 지도에 표시할 마커가 50개 이상이 되었기 때문에 해당 마커 기능을 사용할 수 없었다. 그래서 이미지 위해 숫자를 표시하도록 태그를 삽입하고 style을 지정해 해결했다.<br/><br/>태그 인식 방지문자로 태그 앞에 #을 추가함",
+    regDt: "2022.04.26"
 }];
