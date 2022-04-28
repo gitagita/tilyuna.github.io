@@ -1,7 +1,7 @@
 <template>
 <div class="list_contents">
   <div>
-    <input id="keyword" type="text"  placeholder="Search" @keyup="filter">
+    <input id="keyword" class="searchForm" type="text"  placeholder="Search" @keyup="filter">
   </div>
   <div class="card_group_list" v-for="(value, index) in board" :key="index">
     <div class="card_contents">
@@ -100,6 +100,17 @@ export default {
 }
 .click_view:hover{
   background:#ffeae7;
+}
+.searchForm{
+  width: 200px;
+  margin: 20px;
+  padding: 0.8em 0.5em;
+  font-family: inherit;
+  border: 2px solid #9E5D5D;
+  outline-style: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
 }
 	
 @media (max-width: 1032px) {

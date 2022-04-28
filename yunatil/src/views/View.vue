@@ -11,6 +11,7 @@
         <div class="ynkContent hangul" v-html="board.content"></div>
       </div>
       <div class="ynkCode" v-if="!(board.code=='<pre></pre>')"><code v-html="board.code"></code></div>
+      <div class="listBtn"><router-link class="hangul_title" to="/">목록</router-link></div>
   </div>
 </template>
 <script>
@@ -71,5 +72,15 @@ hr{
 }
 .ynkCode code{
   color: #9E5D5D;
+}
+.listBtn{
+  margin-top: 20px;
+  padding: 5px;  
+}
+.listBtn:hover{
+  width: fit-content;
+  padding: 5px;
+  border-radius: 3px;
+  background:#d78b7d;
 }
 </style>

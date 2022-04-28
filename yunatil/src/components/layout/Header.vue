@@ -26,8 +26,9 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Acme&family=Do+Hyeon&family=Hahmlet:wght@100&display=swap');
 
 .header_nav {
-  background-image: url(./../../assets/img/bg-masthead.jpg);
+  background-image: url(./../../assets/img/banner.png);
   background-size: 100%;
+  background-position-y: center;
   width: 100%;
   height: 300px;
   border: 2px solid;
@@ -47,7 +48,7 @@ export default {
   top: 50px;
   margin: 50px 20px;
   font-size: 60px;
-  text-shadow: 3px 3px #f0f0f0;
+  text-shadow: 2px 2px #f0f0f0;
 }
 .view_img{
   width: 100%;
@@ -58,6 +59,7 @@ export default {
 }
 .title{
   margin-left: 20px;
+  text-shadow: 1px 1px #f0f0f0;
 }
 a{
   text-decoration: none;
