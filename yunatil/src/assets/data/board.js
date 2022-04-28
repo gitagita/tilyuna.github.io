@@ -1,4 +1,5 @@
 export default [{
+    id: 1,
     type: "tip",
     key:"고도몰",
     title: "SESSION",
@@ -7,6 +8,7 @@ export default [{
     regDt: "2022.04.05"
 },
 {
+    id: 2,
     type: "tip",
     key:"고도몰",
     title: "로그로 데이터 확인",
@@ -15,6 +17,7 @@ export default [{
     regDt: "2022.04.05"
 },
 {
+    id: 3,
     type: "tip",
     key:"고도몰",
     title: "trigger()",
@@ -23,6 +26,7 @@ export default [{
     regDt: "2022.04.06"
 },
 {
+    id: 4,
     type: "tip",
     key:"고도몰",
     title: "get: url로 넘긴 데이터 가져오기",
@@ -31,6 +35,7 @@ export default [{
     regDt: "2022.04.06"
 },
 {
+    id: 5,
     type: "tip",
     key:"고도몰",
     title: "고도몰 공통 코드",
@@ -39,6 +44,7 @@ export default [{
     regDt: "2022.04.07"
 },
 {
+    id: 6,
     type: "work",
     key:"고도몰",
     title: "타임세일",
@@ -47,6 +53,7 @@ export default [{
     regDt: "2022.04.08"
 },
 {
+    id: 7,
     type: "error",
     key:"고도몰",
     title: "선물하기",
@@ -55,6 +62,7 @@ export default [{
     regDt: "2022.04.08"
 },
 {
+    id: 8,
     type: "error",
     key:"고도몰",
     title: "전화번호 검색 필터",
@@ -63,6 +71,7 @@ export default [{
     regDt: "2022.04.13"
 },
 {
+    id: 9,
     type: "tip",
     key:"고도몰",
     title: "Controller에서 페이지 redirect",
@@ -71,6 +80,7 @@ export default [{
     regDt: "2022.04.14"
 },
 {
+    id: 10,
     type: "tip",
     key:"고도몰",
     title: "CommonController",
@@ -79,6 +89,7 @@ export default [{
     regDt: "2022.04.14"
 },
 {
+    id: 11,
     type: "dev",
     key:"파이썬",
     title: "MemoCode 코딩 메뉴 추가",
@@ -87,6 +98,7 @@ export default [{
     regDt: "2022.04.16"
 },
 {
+    id: 12,
     type: "error",
     key:"고도몰",
     title: "고도몰 고유 기능 휴대폰 인증 오류 해결",
@@ -95,10 +107,11 @@ export default [{
     regDt: "2022.04.18"
 },
 {
+    id: 13,
     type: "error",
     key:"고도몰",
     title: "회원가입 버튼 클릭 시 submit 되지 않는 오류",
-    code: "",
+    code: "<pre></pre>",
     content: "고도몰 [회원 > 회원 관리 > 회원 가입 항목 관리] 에서 페이지에 없는 항목이 사용으로 체크되어 있지 않는지 확인 ",
     regDt: "2022.04.18"
 },
@@ -111,10 +124,11 @@ export default [{
     regDt: "2022.04.24"
 },
 {
+    id: 14,
     type: "tip",
     key:"git",
     title: "git ssh로 clone하기",
-    code: "",
+    code: "<pre></pre>",
     content: "1. git 설치하기<br/><br/>2. 사용자 이름 및 이메일 설정하기레파지토리에 커밋하고 푸시하기 위해 필요함) <br/><br/>git config --global user.name '사용자 이름'<br/>git config --global user.email '사용자 이메일'<br/><br/>3. ssh-keygen 사용하기<br/>ssh-keygen -t rsa<br/><br/>C:\\Users\\[사용자계정]\\.ssh 폴더에 id_dsa.pub 파일의 내용(공개키)을 복사해 git레파지토리 ssh공개키로 설정한다.<br/>(필요에 따라 해당 폴더에 config파일을 삽입한다.)<br/><br/>4. 레파지토리의 ssh 주소 복사 후 <br/>git clone [복사한 ssh주소]",
     regDt: "2022.04.24"
 },
@@ -127,6 +141,7 @@ export default [{
     regDt: "2022.04.26"
 },
 {
+    id: 15,
     type: "tip",
     key:"네이버지도APi",
     title: "마커 위에 숫자 표시하기",
