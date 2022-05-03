@@ -116,6 +116,7 @@ export default [{
     regDt: "2022.04.18"
 },
 {
+    id: 14,
     type: "tip",
     key:"php",
     title: "explode함수",
@@ -124,7 +125,7 @@ export default [{
     regDt: "2022.04.24"
 },
 {
-    id: 14,
+    id: 15,
     type: "tip",
     key:"git",
     title: "git ssh로 clone하기",
@@ -133,6 +134,7 @@ export default [{
     regDt: "2022.04.24"
 },
 {
+    id: 16,
     type: "tip",
     key:"네이버지도APi",
     title: "마커 지우기",
@@ -141,11 +143,30 @@ export default [{
     regDt: "2022.04.26"
 },
 {
-    id: 15,
+    id: 17,
     type: "tip",
     key:"네이버지도APi",
     title: "마커 위에 숫자 표시하기",
     code: "<pre>const tmpIndex = parseInt(index)+1;\nvar marker = new naver.maps.Marker({\n	position: oPoint2,\n	map: map,\n	title:tit,\n	zIndex:MarkerCnt,\n	icon: {\n		content: '<#div><#img src='../img/map/pin_default.png' alt='' ' +\n				 'style='margin: 0px; padding: 0px; border: 0px solid transparent; display: block; max-width: none; max-height: none;' +\n				 '-webkit-user-select: none; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;'>' +\n				 '<#span class='shd' style='z-index:10; color: #ff8888; text-align: center; position: absolute; width: 22px; height: 35px; left: 0px; top: 0px;'>'+tmpIndex+'<#span></#div>'\n		}\n});</pre>",
     content: "네이버 지도 api에 숫자가 표시된 마커를 제공하고 있었다. 그런데 숫자가 8까지 밖에 제공하고 있지 않았다. 마커 이미지와 숫자가 분리되지 않고 숫자 마커 자체가 이미지로 되어 있었다.<br/>개발 사항에서는 지도에 표시할 마커가 50개 이상이 되었기 때문에 해당 마커 기능을 사용할 수 없었다. 그래서 이미지 위해 숫자를 표시하도록 태그를 삽입하고 style을 지정해 해결했다.<br/><br/>태그 인식 방지문자로 태그 앞에 #을 추가함",
     regDt: "2022.04.26"
+},
+{
+    id: 18,
+    type: "error",
+    key:"api",
+    title: "api: delete, geta메서드는 body에 data를 실어 보내기 불가능",
+    code: "<pre>async delBoardView ({state, dispatch, commit, rootGetters}, inquiry) {\n    console.log('inquiry', inquiry)\n    const defaultsData = ncpApi.defaults.data\n    ncpApi.defaults.data = {password: inquiry.password}\n    // await dispatch('_delBoardDetail', { params: {boardNo: inquiry.boardNo, articleNo: inquiry.articleNo}, inquiry })\n    await dispatch('_delBoardDetail', { params: inquiry })\n    ncpApi.defaults.data = defaultsData\n}\n</pre>",
+    content: "api에서 delete와 get메서드는 body에 data를 실어 보낼 수 없다. swagger에서 제공하는 api중 비회원이 게시판 글을 삭제하는 경우 비밀번호를 body로 넘겨주도록 구현되어 있었다. 비밀번호이기 때문에 body에 데이터를 실어 보내는 것은 이해하지만 post가 아닌 delete로 구현한 이유는 모르겠다.<br/>그래서 ncpApi 전역 변수에 강제로 data를 추가해 해결했다.",
+    regDt: "2022.05.03"
+},
+{
+    id: 19,
+    type: "error",
+    key:"vue",
+    title: "에러 코드에 따른 조건",
+    code: "<pre>this.$store.dispatch('board/editableBoardView', inquiry).then(() => {\n    this.user.password = ''\n    this.$emit('isCorrect', true)\n    this.close('close')\n}).catch((err) => {\n    const code = err.data.code\n    if (code === 'M0306') {\n    this.setDisplayPwd(false)\n    this.key = err.data.key\n    }\n})\n</pre>",
+    content: "비밀번호 10회 오류 시 캡챠 이미지를 띄워 인증코드를 입력하도록 하는 부분을 구현했다. f12키에서 네트워크 부분에 에러의 CODE를 확인할 수 있는데 이 에러를 err.data.code로 가져올 수 있다. ",
+    regDt: "2022.05.03"
 }];
+
