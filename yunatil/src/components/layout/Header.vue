@@ -36,6 +36,7 @@ export default {
 .hangul{
   font-family: 'Hahmlet', serif;
   font-size: 13px;
+  font-weight: 600;
 }
 .hangul_title{
   font-family: 'Do Hyeon', sans-serif;
