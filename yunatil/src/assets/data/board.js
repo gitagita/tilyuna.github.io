@@ -168,5 +168,22 @@ export default [{
     code: "<pre>this.$store.dispatch('board/editableBoardView', inquiry).then(() => {\n    this.user.password = ''\n    this.$emit('isCorrect', true)\n    this.close('close')\n}).catch((err) => {\n    const code = err.data.code\n    if (code === 'M0306') {\n    this.setDisplayPwd(false)\n    this.key = err.data.key\n    }\n})\n</pre>",
     content: "비밀번호 10회 오류 시 캡챠 이미지를 띄워 인증코드를 입력하도록 하는 부분을 구현했다. f12키에서 네트워크 부분에 에러의 CODE를 확인할 수 있는데 이 에러를 err.data.code로 가져올 수 있다. ",
     regDt: "2022.05.03"
+},
+{
+    id: 20,
+    type: "dev",
+    key:"vue",
+    title: "게시글 작성하기: 이미지",
+    code: "<pre>const inquiry = {\n        boardNo: this.boardNo,\n        articleTitle: this.articleTitle,\n        articleContent: this.articleContent,\n        password: this.password,\n        secreted: this.secreted,\n        boardCategoryNo: this.boardCategoryNo,\n        imageUrls: [],\n        images: this.images,\n        guestName: this.guestName,\n        tags: []\n      }\n      if (this.running) {\n        return\n      } else {\n        this.running = true\n      }\n      const dispatch = this.$store.dispatch\n      Promise.all(inquiry.images.map((image) => {\n        const data = new FormData()\n        data.append('file', image.file)\n        return dispatch('common/uploadImages', data)\n      })).then(ret => {\n        const urls = ret.map(res => 'http:' + res.data.imageUrl)\n        inquiry.imageUrls = urls\n        const img = ret.map(res => res.data.originName)\n        for (var i = 0; i < img.length; i++) {\n          inquiry.images[i] = {'originalFileName': img[i], 'uploadedFileName': urls[i]}\n        }\n        this.$store.dispatch('board/setBoardView', inquiry).then(() => {\n          alert('게시글이 작성되었습니다.')\n          this.running = false\n          this.close('')\n        }).catch((e) => {\n          this.running = false\n        })\n      })\n</pre>",
+    content: "게시글 작성하는 API를 사용해서 params로 inquery 값을 대입했다. 이미지의 경우 데이터 형식을 맞춰주어야했는데, 이때 map을 이용해 이미지 데이터들을 하나씩 가져와 가공했다.",
+    regDt: "2022.05.09"
+},
+{
+    id: 21,
+    type: "tip",
+    key:"vue",
+    title: "...mapState와 ...mapGetters",
+    code: "<pre>// js 파일\nmutations: {\n  BOARD_VIEW (state, view) {\n     state.view = view\n  }\n},\ngetters: {\n  getCaptchaUrl (state) {\n    return state.captchaImg\n  }\n}\n\n// vue파일\ncomputed: {\n   ...mapState('board', ['categories']),\n   ...mapGetters('authentication', ['isAvailableMember'])\n}\n</pre>",
+    content:  "...mapState('경로', ['변수명', '변수명', ...])<br/>...mapGetters('경로', ['getter함수명'])<br/>",
+    regDt: "2022.05.09"
 }];
-
