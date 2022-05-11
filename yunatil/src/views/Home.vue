@@ -2,6 +2,15 @@
 <div class="list_contents">
   <div>
     <input id="keyword" class="searchForm" type="text"  placeholder="Search" @keyup="filter">
+    <div class="selectBox">
+        <select id="selectbox" class="hangul select" @change="selectOption($event)">
+          <option value="">전체</option>
+          <option value="title">제목</option>
+          <option value="content">내용</option>
+          <option value="type">카테고리</option>
+          <option value="key">주제</option>
+        </select>
+    </div>
   </div>
   <div class="card_group_list" v-for="(value, index) in board" :key="index">
     <div class="card_contents">
@@ -26,22 +35,37 @@ import board from './../assets/data/board';
 export default {
   data(){
     return {
-      board: board
+      board: board,
+      menu: ""
     }
   },
   methods: {
+    selectOption(event){
+      this.menu =  event.target.value;
+    },
     filter(){
       var value, keyword, item, i;
 
       value = document.getElementById("keyword").value.toUpperCase();
       item = document.getElementsByClassName("card_group_list");
-
+      
       for(i=0; i<item.length; i++){
-        //전체 검색
-        keyword = item[i].getElementsByClassName("card_contents");
-
-        //type 검색
-        //keyword = item[i].getElementsByClassName("ynkType");
+        switch (this.menu) {
+          case "title":
+            keyword = item[i].getElementsByClassName("ynkTitle");
+            break;
+          case "content":
+            keyword = item[i].getElementsByClassName("ynkContent");
+            break;
+          case "type":
+            keyword = item[i].getElementsByClassName("ynkType");
+            break;
+          case "key":
+            keyword = item[i].getElementsByClassName("ynkKey");
+            break;
+          default:
+            keyword = item[i].getElementsByClassName("card_contents");
+        }
 
         if(keyword[0].innerHTML.toUpperCase().indexOf(value) > -1){
           item[i].style.display = "flex";
@@ -102,21 +126,46 @@ export default {
   background:#ffeae7;
 }
 .searchForm{
-  width: 200px;
+  width: 650px;
   margin: 20px;
   padding: 0.8em 0.5em;
   font-family: inherit;
   border: 2px solid #9E5D5D;
+  border-radius: 4px;
   outline-style: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
-	
+.selectBox{
+  margin: 22px 0 0 20px;
+  float: left;
+  position: relative;
+  width: 100px;
+  height: 36px;
+  border-radius: 4px;
+  border: 2px solid #9E5D5D;
+}
+.selectBox .select {
+  width: inherit;
+  height: inherit;
+  background: transparent;
+  border: 0 none;
+  outline: 0 none;
+  padding: 0 5px;
+  position: relative;
+  z-index: 3;
+}
+.selectBox .select option {
+  padding: 3px 0;
+}
 @media (max-width: 1032px) {
   .card_group_list{
     width: 100%;
     margin: 0;
+  }
+  .searchForm{
+    width: 300px;
   }
 }
 </style>

@@ -1,17 +1,8 @@
 <template>
 <div class="header_nav english">
-  <b-navbar class="nav_bar" toggleable="lg" variant="faded" type="light">
+  <div class="nav_bar" type="light">
     <div class="ynkTitle"><a href="/"><strong class="title" >YunaTil</strong></a></div>
-    <!-- <div>
-        <div class="hangul">메뉴</div>
-        <select>
-          <option>고도몰</option>
-          <option>Vue</option>
-          <option>React</option>
-          <option>Node.js</option>
-        </select>
-    </div> -->
-  </b-navbar>
+  </div>
   <h1 class="sub_title">Today I Learned</h1>
 </div>
 </template>
