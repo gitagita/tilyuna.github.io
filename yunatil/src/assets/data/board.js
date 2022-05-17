@@ -186,4 +186,40 @@ export default [{
     code: "<pre>// js 파일\nmutations: {\n  BOARD_VIEW (state, view) {\n     state.view = view\n  }\n},\ngetters: {\n  getCaptchaUrl (state) {\n    return state.captchaImg\n  }\n}\n\n// vue파일\ncomputed: {\n   ...mapState('board', ['categories']),\n   ...mapGetters('authentication', ['isAvailableMember'])\n}\n</pre>",
     content:  "...mapState('경로', ['변수명', '변수명', ...])<br/>...mapGetters('경로', ['getter함수명'])<br/>",
     regDt: "2022.05.09"
+},
+{
+    id: 22,
+    type: "tip",
+    key:"고도몰",
+    title: "file데이터 ps로 전송하는 방법",
+    code: "<pre><form id='frm' action='../member/member_ps.php' method='post' enctype='multipart/form-data'>\n//file 타입의 데이터를 ps로 전송하기 위해서는 form 태그에 enctype='multipart/form-data' 추가해야함\n\n<input type='file' name='busiReg' id='busiReg'/></pre>",
+    content:  "회원가입 시 사업자등록증을 첨부하는 부분을 구현했다.",
+    regDt: "2022.05.12"
+},
+{
+    id: 23,
+    type: "tip",
+    key:"고도몰",
+    title: "preg_match(): 배송 불가 지역",
+    code: "<pre>//Controller\n$notDelivery = $dbkOrder->getDeliveryAreaLimit();\nif($notDelivery){\n	foreach($notDelivery as $key => $value){\n		if(preg_match('/{$value['addArea']}/u', $deliveryArea)){\n			$this->json('y');\n		}\n	}\n}\n$this->json('n');\n\n\n//Component\npublic function getDeliveryAreaLimit(){\n		$this->arrWhere[] = ' sd.basicKey = 1';\n		$this->db->strField = ' sd.addArea ';\n		$this->db->strWhere = implode(' AND ', gd_isset($this->arrWhere));\n\n		$query = $this->db->query_complete();\n		$strSQL = 'SELECT ' . array_shift($query) . ' FROM ' .DB_SCM_DELIVERY_AREA. ' as sd ' . implode(' ', $query);\n		$data = $this->db->query_fetch($strSQL, $this->arrBind,false);\n		unset($this->arrWhere);\n		unset($this->arrBind);\n		return StringUtils::htmlSpecialCharsStripSlashes(gd_isset($data));\n	}\n</pre>",
+    content:  "preg_match($pattern, $subject [,$matches]);<br/><br/>$subject에 $pattern이 있는지 검색<br/>있으면 1, 없으면 0을 반환",
+    regDt: "2022.05.15"
+},
+{
+    id: 24,
+    type: "tip",
+    key:"고도몰",
+    title: "이미지 줌 플러그인",
+    code: "<pre>  $(document).ready(function() {\n    $('#elementToZoomOn').smartZoom(); // start plugin behaviour\n  });\n\n\n//이미지가 여러개인 경우\n//Controller\n$getData['image'][$gVal['imageKind']]['img'][] = gd_html_preview_image($gVal['imageName'], $goodsInfo['imagePath'], $goodsInfo['imageStorage'], $imageSize, 'goods', $goodsInfo['goodsNm'], null, false, false, $imageHeightSize);\n\n//html\n$('.dbk_goods_view_image_slider .zoom-content-mobile > img').each(function(index, item){\n    $(item).attr('id', 'zoomImage_'+index);\n    $('.dbk_goods_view_image_slider > li > .zoom-content-mobile > img').smartZoom('destroy');\n    $('#zoomImage_'+index).smartZoom(option);\n   //이미지 확대 비율 조정\n    //$('#zoomImage_'+index).smartZoom('zoom', 0.3);\n    //zoom-content-mobile 클래스의 width와 height의 절반 길이를 설정하면 이미지가 중간에 위치함\n    //$('#zoomImage_'+index).smartZoom('pan', -250,-250);\n})\n</pre>",
+    content:  "이미지 줌 플러그인 링크: https://github.com/dams-dev/smartJQueryZoom<br/>js파일을 script로 삽입하고 smartZoom 함수로 이미지를 줌할 수 있다.<br/><br/>이미지가 여러개인 경우 이미지마다 id를 다르게 설정하여 각각 zoom시켜주어야한다.",
+    regDt: "2022.05.15"
+},
+{
+    id: 25,
+    type: "tip",
+    key:"codeIgniter 프레임워크",
+    title: "codeIgniter 프레임워크",
+    code: "<pre></pre>",
+    content:  "codeIgniter 프레임워크<br/><br/>페이지 생성 시에 주로 사용하는 폴더는 application 폴더 하위에 있는 controllers, models, views 폴더였다.<br/><br/>views 폴더에서 프론트 view 파일을 생성하고,<br/><br/>controllers폴더에서 view파일과 이름이 매칭되는 컨트롤러를 생성하고,<br/><br/>models 폴더에서 db에 접근하는 기능에 대한 파일을 생성한다.<br/><br/>.",
+    regDt: "2022.05.17"
 }];
