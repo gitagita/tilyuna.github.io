@@ -240,4 +240,22 @@ export default [{
     code: "<pre>public function excelDown()\n		{\n			$search['keyword'] = $this->input->get('keyword', TRUE);\n			$search['sort'] = $this->input->get('sort',TRUE);\n\n			$excelDeliveryAreaList = $this->DawnDeliveryAdminModel->getDawnDeliveryAreaListExcel('harim_dawn_delivery_area', $search);\n\n			if($excelDeliveryAreaList) {\n\n				$idx = 2 ;\n				foreach($excelDeliveryAreaList as $eKey => $eVal) {\n\n					// 워크시트에서 1번째는 활성화\n					$this->excel->setActiveSheetIndex(0);\n					// 워크시트 이름 지정\n					$this->excel->getActiveSheet()->setTitle('새벽배송지역');\n					// A1의 내용을 입력 합니다.\n					$this->excel->getActiveSheet()->setCellValue('A1', '고유번호');\n					$this->excel->getActiveSheet()->setCellValue('B1', '우편번호');\n					$this->excel->getActiveSheet()->setCellValue('C1', '등록일');\n					$this->excel->getActiveSheet()->setCellValue('A'.$idx, $eVal['sno']);\n					$this->excel->getActiveSheet()->setCellValue('B'.$idx, $eVal['zip_code']);\n					$this->excel->getActiveSheet()->setCellValue('C'.$idx, $eVal['regDt']);\n					// A1의 폰트를 변경 합니다.\n					//$this->excel->getActiveSheet()->getStyle('A1')->getFont()->setSize(20);\n					// A1의 글씨를 볼드로 변경합니다.\n					//$this->excel->getActiveSheet()->getStyle('A1')->getFont()->setBold(true);\n					// A1부터 D1까지 셀을 합칩니다.\n					//$this->excel->getActiveSheet()->mergeCells('A1:D1');\n					// A1의 컬럼에서 가운데 쓰기를 합니다.\n					//$this->excel->getActiveSheet()->getStyle('A1')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);\n\n					$idx ++;\n\n					usleep(500000);//딜레이\n				}\n			}else {\n				// 워크시트에서 1번째는 활성화\n				$this->excel->setActiveSheetIndex(0);\n				// 워크시트 이름 지정\n				$this->excel->getActiveSheet()->setTitle('새벽배송지역');\n				// A1의 내용을 입력 합니다.\n				$this->excel->getActiveSheet()->setCellValue('A1', '번호');\n				$this->excel->getActiveSheet()->setCellValue('B1', '우편번호');\n				$this->excel->getActiveSheet()->setCellValue('C1', '등록일');\n			}\n\n			$filename='delivery_area.xls'; // 엑셀 파일 이름\n			header('Content-Type: application/vnd.ms-excel'); //mime 타입\n			header('Content-Disposition: attachment;filename=''.$filename.'''); // 브라우저에서 받을 파일 이름\n			header('Cache-Control: max-age=0'); //no cache\n						\n			// Excel5 포맷으로 저장 엑셀 2007 포맷으로 저장하고 싶은 경우 'Excel2007'로 변경합니다.\n			$objWriter = PHPExcel_IOFactory::createWriter($this->excel, 'Excel2007'); \n			// 서버에 파일을 쓰지 않고 바로 다운로드 받습니다.\n			$objWriter->save('php://output');\n			exit();\n		}\n\n\n\n</pre>",
     content:  "처음엔 엑셀 업로드와 같은 라이브러리를 사용하려고 했는데 오류가 나서 다른 방법으로 수정했다.<br/><br/>//원래 사용하려던 방법(오류나거나 파일을 읽지 못함)<br/>$objPHPExcel = PHPExcel_IOFactory::load($_FILES['excel']['tmp_name']);<br/><br/>",
     regDt: "2022.05.18"
+},
+{
+    id: 28,
+    type: "err",
+    key:"카페24_API",
+    title: "\\'Access-Control-Allow-Origin: *\\'. (parameter.src)'",
+    code: "<pre>'<'IfModule mod_headers.c'>'\nHeader set Access-Control-Allow-Origin '*'\n'<'/'IfModule'>'\n\n// 태그가 인식되어 태그 양쪽에 임의로 따옴표를 추가했다.\n\n</pre>",
+    content:  "POST/api/v2/admin/scripttags 호출했을 때 발생했던 오류<br/><br/>{'error':{'code':422,'message':'The CORS (Cross-origin resource sharing) header of the script in the src attribute must be \\'Access-Control-Allow-Origin: *\\'. (parameter.src)'}}<br/><br/>src 데이터가 있는 서버파일에 접근하지 못해 발생하는 오류였음<br/></br/> Apache 웹 서버에서 apache2.conf 또는 sites-enabled 파일에서는 <Directory> 태그를 통해 파일이 위치한 경로와 디렉토리에 대한 접근 허용 설정을 할 수 있다.<br/><br/>.htaccess 파일은 해당 설정 기능을 독립된 자료로 저장한 파일이다.<br/><br/>.htaccess 파일에 해당 내용 추가하면 해결 됨<br/><br/><IfModule mod_headers.c><br/>Header set Access-Control-Allow-Origin '*'<br/></IfModule>",
+    regDt: "2022.05.19"
+},
+{
+    id: 29,
+    type: "tip",
+    key:"PHPExcel",
+    title: "PHPExcel라이브러리 날짜 타입 지정",
+    code: "<pre>$this->excel->getActiveSheet()->setCellValue('B'.$idx, PHPExcel_Style_NumberFormat::toFormattedString($eVal['holiday'], PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2));</pre>",
+    content:  "PHPExcel라이브러리를 사용해 엑셀다운로드 프로세스를 구현하던 중 data 타입의 데이터가  2022-01-01이 아니라  45363같은 숫자로 출력되었다. 이때 엑셀 타입형식을 지정해주니 날짜 형식으로 출력되었다.",
+    regDt: "2022.05.20"
 }];
