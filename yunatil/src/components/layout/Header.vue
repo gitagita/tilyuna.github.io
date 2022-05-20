@@ -51,8 +51,12 @@ export default {
 }
 .title{
   margin-left: 20px;
-  text-shadow: 1px 1px #f0f0f0;
+  color: #f0f0f0;
+  /* text-shadow: 1px 1px #f0f0f0; */
 }
+.sm {font-size: 8px;}
+.md{font-size: 10px;}
+.lg{font-size: 12px;}
 a{
   text-decoration: none;
   color: black;
@@ -60,5 +64,12 @@ a{
 }
 .ynkTitle{
   padding-top: 14px;
+}
+
+@media (max-width: 780px) {
+  .sub_title{
+    font-size: 30px;
+    margin: 90px 20px;
+  }
 }
 </style>

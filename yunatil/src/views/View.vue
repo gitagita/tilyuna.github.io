@@ -11,7 +11,7 @@
         <div class="ynkContent hangul" v-html="board.content"></div>
       </div>
       <div class="ynkCode" v-if="!(board.code=='<pre></pre>')"><code v-html="board.code"></code></div>
-      <div class="listBtn"><router-link class="hangul_title" to="/">목록</router-link></div>
+      <div class="listBtn"><router-link class="hangul_title md" to="/">목록보기</router-link></div>
   </div>
 </template>
 <script>
@@ -82,5 +82,16 @@ hr{
   padding: 5px;
   border-radius: 3px;
   background:#d78b7d;
+}
+
+@media (max-width: 900px) {
+  .view{
+    margin-top: 30px;
+    padding-bottom: 30px;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+  }
 }
 </style>

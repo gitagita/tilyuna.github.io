@@ -128,8 +128,9 @@ export default {
 .searchForm{
   width: 650px;
   margin: 20px;
-  padding: 0.8em 0.5em;
+  padding: 6px 5px;
   font-family: inherit;
+  font-size: 14px;
   border: 2px solid #9E5D5D;
   border-radius: 4px;
   outline-style: none;
@@ -138,11 +139,11 @@ export default {
   appearance: none;
 }
 .selectBox{
-  margin: 22px 0 0 20px;
+  margin: 20px 0 0 20px;
   float: left;
   position: relative;
   width: 100px;
-  height: 36px;
+  height: 32px;
   border-radius: 4px;
   border: 2px solid #9E5D5D;
 }
@@ -166,6 +167,14 @@ export default {
   }
   .searchForm{
     width: 300px;
+  }
+}
+@media (max-width: 520px) {
+  .searchForm{
+    width: 170px;
+  }
+  .selectBox{
+    width: 80px;
   }
 }
 </style>
