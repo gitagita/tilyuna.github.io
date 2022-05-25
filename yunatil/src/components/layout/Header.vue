@@ -54,9 +54,9 @@ export default {
   color: #f0f0f0;
   /* text-shadow: 1px 1px #f0f0f0; */
 }
-.sm {font-size: 8px;}
-.md{font-size: 10px;}
-.lg{font-size: 12px;}
+.sm {font-size: 10px;}
+.md{font-size: 14px;}
+.lg{font-size: 18px;}
 a{
   text-decoration: none;
   color: black;

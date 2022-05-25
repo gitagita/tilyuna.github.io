@@ -7,7 +7,7 @@
           <option value="">전체</option>
           <option value="title">제목</option>
           <option value="content">내용</option>
-          <option value="type">카테고리</option>
+          <option value="type">태그</option>
           <option value="key">주제</option>
         </select>
     </div>
@@ -42,6 +42,7 @@ export default {
   methods: {
     selectOption(event){
       this.menu =  event.target.value;
+      this.filter();
     },
     filter(){
       var value, keyword, item, i;
