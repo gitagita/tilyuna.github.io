@@ -1,30 +1,33 @@
 <template>
-  <div class="view">
+    <div v-if="board">
+    <div v-for="(data, index) in board" :key="index">
+      <div class="view" v-if="data.id == $route.params.id">
       <div class="view_header">
-        <strong class="ynkTitle hangul_title">{{board.title}}    </strong>
-        <span class="ynkType hangul">{{board.type}}</span>
-        <span class="ynkRegDt hangul">{{board.regDt}}</span>
+        <strong class="ynkTitle hangul_title">{{data.title}}    </strong>
+        <span class="ynkType hangul">{{data.type}}</span>
+        <span class="ynkRegDt hangul">{{data.regDt}}</span>
       </div>
       <hr>
       <div class="view_contents">
-        <div class="ynkKey hangul">[{{board.key}}]  </div>
-        <div class="ynkContent hangul" v-html="board.content"></div>
+        <div class="ynkKey hangul">[{{data.key}}]  </div>
+        <div class="ynkContent hangul" v-html="data.content"></div>
       </div>
-      <div class="ynkCode" v-if="!(board.code=='<pre></pre>')"><code v-html="board.code"></code></div>
+      <div class="ynkCode" v-if="!(data.code=='<pre></pre>')"><code v-html="data.code"></code></div>
       <div class="listBtn"><router-link class="hangul_title md" to="/">목록보기</router-link></div>
+      </div>
+  </div>
   </div>
 </template>
 <script>
+import board from './../assets/data/board';
+
 export default {
-  name: 'View',
-  props: {
-    board:{
-      type: Object,
-      default() {
-          return {}
-      }
+  data () {
+    return {
+      board: board
     }
-  }
+  },
+  name: 'View'
 }
 </script>
 <style scoped>

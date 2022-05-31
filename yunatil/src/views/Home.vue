@@ -13,10 +13,11 @@
     </div>
   </div>
   <div class="card_group_list" v-for="(value, index) in board" :key="index">
-    <div class="card_contents">
+    <router-link :to="`/view/`+value.id">
+      <div class="card_contents">
       <div class="hangul_title">
-        <div class="click_view" @click="getView(value)">
-          <strong class="ynkTitle">{{value.title}}    </strong>
+        <div class="click_view">
+          <strong class="ynkTitle lg">{{value.title}}    </strong>
           <span class="ynkType hangul">{{value.type}}</span>
         </div>
         <div class="list_contents">
@@ -24,8 +25,8 @@
           <span class="ynkContent hangul">{{value.content}}</span>
         </div>
       </div>
-      <!-- <div class="ynkCode" v-if="!(value.code=='<pre></pre>')"><code v-html="value.code"></code></div> -->
-    </div>
+      </div>
+    </router-link>
   </div>
 </div>
 </template>
@@ -39,6 +40,7 @@ export default {
       menu: ""
     }
   },
+  name: 'Home',
   methods: {
     selectOption(event){
       this.menu =  event.target.value;
@@ -75,9 +77,7 @@ export default {
           item[i].style.display = "none";
         }
       }
-    },getView(board) {
-      this.$router.push({name: 'View', params: {board: board}})
-    },
+    }
   }
 };
 </script>

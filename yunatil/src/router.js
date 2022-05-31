@@ -15,7 +15,6 @@ const router = new VueRouter({
         {
             path: "/view/:id", 
             component: View,
-            name: "View",
             props: true
         }
     ]
