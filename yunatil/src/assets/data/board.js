@@ -40,7 +40,7 @@ export default [{
     key:"고도몰",
     title: "고도몰 공통 코드",
     code: "<pre>gd_select_box('areaNm', 'areaNm', gd_array_change_key_value(gd_code('90001')), \n null, $dbkMainFilter['areaNm'], '선택해주세요');</pre>",
-    content: "텍스트로 selectbox 만들기, 코드 관리는 es_code애서 관리함",
+    content: "텍스트로 selectbox 만들기, 코드 관리는 es_code에서 관리함",
     regDt: "2022.04.07"
 },
 {
@@ -192,8 +192,8 @@ export default [{
     type: "tip",
     key:"고도몰",
     title: "file데이터 ps로 전송하는 방법",
-    code: "<pre><form id='frm' action='../member/member_ps.php' method='post' enctype='multipart/form-data'>\n//file 타입의 데이터를 ps로 전송하기 위해서는 form 태그에 enctype='multipart/form-data' 추가해야함\n\n<input type='file' name='busiReg' id='busiReg'/></pre>",
-    content:  "회원가입 시 사업자등록증을 첨부하는 부분을 구현했다.",
+    code: "<pre>'<'form id='frm' action='../member/member_ps.php' method='post' enctype='multipart/form-data'>\n//file 타입의 데이터를 ps로 전송하기 위해서는 form 태그에 enctype='multipart/form-data' 추가해야함\n\n'<'input type='file' name='busiReg' id='busiReg'/></pre>",
+    content:  "회원가입 시 사업자등록증을 첨부하는 부분을 구현했다. <br/><br/>form 태그에 enctype='multipart/form-data' 추가",
     regDt: "2022.05.12"
 },
 {
@@ -258,4 +258,67 @@ export default [{
     code: "<pre>$this->excel->getActiveSheet()->setCellValue('B'.$idx, PHPExcel_Style_NumberFormat::toFormattedString($eVal['holiday'], PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2));</pre>",
     content:  "PHPExcel라이브러리를 사용해 엑셀다운로드 프로세스를 구현하던 중 data 타입의 데이터가  2022-01-01이 아니라  45363같은 숫자로 출력되었다. 이때 엑셀 타입형식을 지정해주니 날짜 형식으로 출력되었다.",
     regDt: "2022.05.20"
+},
+{
+    id: 30,
+    type: "dev",
+    key:"php",
+    title: "휴무일 프로세스",
+    code: "<pre>class Orderform extends CI_Controller\n{\n\n	//새벽배송 휴무일\n	const HOLIDAY_HOUR = 18;\n\n	public function __construct()\n	{\n		parent::__construct();\n		$this->load->library('session');\n		$this->load->helper(array('form', 'url'));\n		$this->load->model('/Harimpet/DawnDeliveryAdminModel');\n\n	}\n\n	public function index()\n	{\n		$zipcode = $this->input->post('zipcode');\n		$holiday = $this->input->post('holiday');\n\n		if(isset($zipcode)) {\n			//echo $zipcode;\n			//$arrData['zipcode'] = $zipcode;\n			$result = $this->getdeliveryArea($zipcode);\n			if($result > 0) {\n				echo 'zipable';\n				exit;\n			} else {\n				echo 'zipdisable';\n				exit;\n			}\n		}\n		if($holiday == 'y') {\n			$result = $this->getDeliveryDay();\n			echo $result;\n			exit;\n		}\n	}\n\n	//새벽배송 가능 우편 번호\n	public function getdeliveryArea($zipcode)\n	{\n		$arrData['zipcode'] = $zipcode;\n		$result = $this->DawnDeliveryAdminModel->getDeliveryAreaReg('harim_dawn_delivery_area', $arrData);\n		return $result['cnt'];\n		exit;\n	}\n\n\n	public function getDeliveryDay(){\n		//$data['today'] = date('Y-m-d');\n		$data['today'] = '2022-05-17';\n		$data['tomorrow'] = date('Y-m-d', strtotime($data['today'].'+1 day'));\n\n		//오늘이 휴무일인지 확인\n		\n		//현재 시간\n		$holidayFl = $this->getHolidayCheck($data['today']);\n		if($holidayFl == 0 && date('H') < self::HOLIDAY_HOUR) {\n			//echo '6시 이전';\n			$deliveryDay = $this->getDeliveryHoliday($data);\n		} else {\n			//echo '6시 이후 || 오늘이 휴무일인 경우';\n			$deliveryDay = $this->getDeliveryHoliday($data, 'y');\n		}\n\n		return $deliveryDay;\n	}\n\n	//새벽 배송 휴무일 계산\n	public function getDeliveryHoliday($data, $kind='n')\n	{\n		//배송 준비기간\n		$dateNum = 0;\n		//현재 시각이 18:00이전이면 => 배송준비기간 오늘 포함 이틀\n\n		//현재 날짜가 휴무일이면\n		//현재 시각이 18:00이후이면 => 배송준비 기간 이틀\n		while(true){\n			//$todayFl = $this->getHolidayCheck($data['today']);\n			$tomorrowFl = $this->getHolidayCheck($data['tomorrow']);\n			\n			//if($todayFl == 0 && $tomorrowFl == 0) {\n			if($tomorrowFl == 0) {\n				//echo '휴무아님y';\n				if($kind=='y' && $dateNum < 1){\n					$dateNum+=1;\n					//echo $dateNum.'  ';\n					$data = $this->setHolidayAdd($data);\n				} else {\n					break;\n				}\n			} else {\n				//echo '휴무임';\n				$data = $this->setHolidayAdd($data);\n			}\n		}\n		\n		return $data['tomorrow'];\n	}\n\n	\n	\n	//해당 날짜 휴무일 체크\n	public function getHolidayCheck($date)\n	{\n		//echo print_r($date, true);\n		$holidayFl = 0;\n		//요일 구하기\n		$week = date('w',strtotime($date));\n		//echo $weekTomorrow;\n		\n		//해당 요일이 토,일요일인 경우\n		if($week == 0  || $week == 6) {\n			$holidayFl+=1;\n		} else {\n			$result = $this->DawnDeliveryAdminModel->getHolidayCnt('harim_dawn_delivery_holiday', $date);\n			if($result['cnt'] > 0) {\n				$holidayFl+=1;\n			}\n		}\n		return $holidayFl;\n	}\n	\n	//다음 날짜로 이동\n	private function setHolidayAdd($arrData) {\n		$getData['today'] = date('Y-m-d', strtotime($arrData['today'].'+1 day'));\n		$getData['tomorrow'] = date('Y-m-d', strtotime($arrData['tomorrow'].'+1 day'));\n\n		return $getData;\n	}\n\n\n}</pre>",
+    content:  "하림펫푸드의 새벽배송 휴무일을 구하는 프로세스를 구현했다.<br/>배송업체 입장에서 생각하면 배송 예상일을 생각하는데 이해하기 쉬웠다. <br/><br/>[예시]<br/>오늘이 18시 이전이고 휴무일이 아닌 경우에는 +1일 한다. 즉, 다음날이 휴무일이 아니라면 예상 배송일이된다. 만약 휴무일이면 이후 날짜 중 휴무일이 아닌 날이 휴무일이 된다. 배송업체 입장에서 다시 말하면 배송을 준비하는 시간이 오늘과 하루 더 해서 배송을 준비한다. <br/><br/>만약 오늘이 휴무일이라면 이후 날짜 중 이틀의 준비 기간을 잡을 수 있으면 된다. 프로세스에서는 $dateNum변수를 선언해서 $dateNum < 1 일 때로 조건을 걸어 휴무일이 아닌 날이 한 번은 있도록 설정했다.",
+    regDt: "2022.05.20"
+},
+{
+    id: 31,
+    type: "diary",
+    key:"db",
+    title: "개발하면서 백업하자. 그리고 기록하자",
+    code: "<pre></pre>",
+    content:  "레이델 개발을 마치고 DB를 이전하는 업체에 의뢰해서 이전이 마칠 때까지 기다렸다. 그런데 이번에 담당하는 사람이 바뀌면서 예전과 다르게 파일과 DB를 이전시킨 것이다. 원래 있었던 내용들이 예전에 있었던 소스코드로 덮어쓰여져 있고, DB도 마찬가지로 추가해두었던 필드들이 사라져 있었다. 팀장님도 이런 경우는 처음라고 하셨다. 백업이라고는 내가 개발한 폴더쪽만 백업해두었지 전체 백업은 해두지 않았었고, 테이블도 몇 개만 파일로 받아두었었다. <br/><br/>나중에 또 이런 일이 있을지도 모르니 DB테이블과 소스코드 모두 시간이 걸리더라도 전체 백업을 받아두어야겠다고 생각했다.<br/><br/>날짜에 따라 그날 개발한 사항을 기록해두는 것도 중요했다. 백업 받은 날짜와 비교해보거나, DB이전한 날 이후로 작업한 것 있는 경우가 있는지 찾을 때 필요했다. 기록하자.",
+    regDt: "2022.05.25"
+},
+{
+    id: 32,
+    type: "tip",
+    key:"php",
+    title: "해당 ID로 로그인한 유저에서만 동작하게 하기",
+    code: "<pre>if(\\Session::get('member.memId') == 'test_3') {...}</pre>",
+    content:  "이미 배포된 사이트이거나, 다른 팀원들이 페이지를 사용하고 있을 때. <br/>테스트 계정 만들어서 해당 ID인 경우의 회원에서만 동작하도록 설정해서 테스트 해볼 수 있다.",
+    regDt: "2022.05.27"
+},
+{
+    id: 33,
+    type: "tip",
+    key:"php",
+    title: "하나의 Contorller에서 여러 페이지로 분기하기",
+    code: "<pre>if($getValue['kind'] == 's') {\n	$this->getView()->setPageName('dbk/stores.php');\n} else if($getValue['kind'] == 'k'){\n	$this->getView()->setPageName('dbk/storek.php');\n} else if($getValue['kind'] == 'y'){\n	$this->getView()->setPageName('dbk/storey.php');\n}\n$this->setData('kind', $getValue['kind']);\n\n</pre>",
+    content:  "여러 페이지가 공통된 Controller를 사용하는 경우 getView함수를 사용할 수 있다. <br/> 분기는 테스트 하는 경우 유용하게 쓰일 수 있다. 여러 사람이 프론트쪽 파일을 하나씩 가지고 있으면서 각자 수정하고 테스트 해볼 때 사용하면 좋다. <br/><br/>예를들어 상품상세페이지를 수정하는데 Controller는 손대지 않고 프론트쪽 파일을 여러명이 각자 독립적으로 수정하고 테스트 하려는 경우가 있다.",
+    regDt: "2022.05.27"
+},
+{
+    id: 34,
+    type: "tip",
+    key:"php",
+    title: "router-link 태그",
+    code: "<pre>'<'router-link :to='`/brand/${brand.no}`'>{{brand.name}}'<'/router-link></pre>",
+    content:  "router-link to에서 변수랑 문자열 연결",
+    regDt: "2022.05.31"
+},
+{
+    id: 35,
+    type: "tip",
+    key:"jquery",
+    title: "클릭 시 checked 되게 하기",
+    code: "<pre>'<'label for='des_r2' style='margin: 10px 5px 10px 0px;'>\n	'<'input type='radio' id='des_r2' class='deliveryDt disable' data-type='post' name='des_delivery' value='datePickerPost' autocomplete='off' checked> 일반배송\n'<'/label>\n'<'label for='des_r1' style='margin: 10px 5px;'>\n	'<'input type='radio' id='des_r1' class='deliveryDt disable' data-type='dawn' name='des_delivery' value='datePickerDawn' autocomplete='off'> 새벽배송\n'<'/label>\n\n\n$('#des_r2').trigger('click');\n$('#des_r1').trigger('click');</pre>",
+    content:  "jquery로 radio타입 checked로 변경하는 방법",
+    regDt: "2022.06.09"
+},
+{
+    id: 36,
+    type: "tip",
+    key:"jquery",
+    title: "날짜 포맷 설정하기",
+    code: "<pre>getFullYmdStr: function(d) {\n	var date = d.split('-'); \n	return date[0]+ '년 ' + parseInt(date[1]) + '월 ' + parseInt(date[2]) + '일 ';\n}</pre>",
+    content:  "split함수로 연,월,일을 나눈 후 형식에 맞게 가공 함. parseInt함수를 사용하면 '06'이 '6'으로 표기된다. 입력값은 '2022-06-09'의 형태이다.",
+    regDt: "2022.06.09"
 }];
