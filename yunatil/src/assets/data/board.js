@@ -321,4 +321,13 @@ export default [{
     code: "<pre>getFullYmdStr: function(d) {\n	var date = d.split('-'); \n	return date[0]+ '년 ' + parseInt(date[1]) + '월 ' + parseInt(date[2]) + '일 ';\n}</pre>",
     content:  "split함수로 연,월,일을 나눈 후 형식에 맞게 가공 함. parseInt함수를 사용하면 '06'이 '6'으로 표기된다. 입력값은 '2022-06-09'의 형태이다.",
     regDt: "2022.06.09"
+},
+{
+    id: 37,
+    type: "tip",
+    key:"고도몰",
+    title: "주문 상세 검색에 검색 필터 추가하기",
+    code: "<pre></pre>",
+    content:  "개발을 하다보면 기업마다 관리자 주문리스트 페이지의 상세 검색쪽에 추가로 검색기능을 요구할 때가 있다.<br/>주문의 상세 검색 폼은 layout_order_search_form.php 파일에 있다.<br/>검색 기능을 추가하는 위치는 OrderAdmin.php이다.",
+    regDt: "2022.06.11"
 }];
