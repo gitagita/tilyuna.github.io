@@ -330,4 +330,31 @@ export default [{
     code: "<pre></pre>",
     content:  "개발을 하다보면 기업마다 관리자 주문리스트 페이지의 상세 검색쪽에 추가로 검색기능을 요구할 때가 있다.<br/>주문의 상세 검색 폼은 layout_order_search_form.php 파일에 있다.<br/>검색 기능을 추가하는 위치는 OrderAdmin.php이다.",
     regDt: "2022.06.11"
+},
+{
+    id: 38,
+    type: "tip",
+    key:"고도몰",
+    title: "Component 상속 받기",
+    code: "<pre>class DbkGoods extends \\Bundle\\Component\\Goods\\Goods</pre>",
+    content:  "",
+    regDt: "2022.06.17"
+},
+{
+    id: 39,
+    type: "tip",
+    key:"고도몰",
+    title: "프론트에서 회원세션 가져오기",
+    code: "<pre><!--{ ? gSess.memId == 'test_1'}-->\n<!--{ / }--></pre>",
+    content:  "아이디가 test_1인 경우에 대해 실행되게 할 수 있다.",
+    regDt: "2022.06.17"
+},
+{
+    id: 40,
+    type: "tip",
+    key:"고도몰",
+    title: "회원의 상품 쿠폰 가져오기",
+    code: "<pre>	/** \n	 * yuna\n	 * 2022.06.15.\n	 * 회원의 상품쿠폰 리스트 가져오기\n	 */	\n	public function getMemberProductCouponCnt(){\n		$memNo = \\Session::get('member.memNo');\n		\n		// 회원\n		$this->arrWhere[] = 'mc.memNo =?';\n		$this->db->bind_param_push($this->arrBind, 'i', $memNo);\n\n		// 만료기간\n		//$this->arrWhere[] = 'c.couponUsePeriodStartDate<=? AND c.couponUsePeriodEndDate>?';\n		$this->arrWhere[] = 'mc.memberCouponStartDate<=? AND mc.memberCouponEndDate>?';\n		$this->db->bind_param_push($this->arrBind, 's', date('Y-m-d H:i:s'));\n        $this->db->bind_param_push($this->arrBind, 's', date('Y-m-d H:i:s'));\n\n		// 쿠폰사용가능 여부\n		$this->arrWhere[] = 'mc.memberCouponState ='y'';\n\n		// 상품 쿠폰\n        $this->arrWhere[] = 'c.couponUseType=?';\n        $this->db->bind_param_push($this->arrBind, 's', 'product');\n\n\n		// 사용범위?PC+모바일(‘a’),PC(‘p’),모바일(‘m’)\n        $this->arrWhere[] = '(c.couponDeviceType in (?,?))';\n\n		if (Request::isMobile()) { // 모바일 접속 여부\n			$this->db->bind_param_push($this->arrBind, 's', 'all');\n			$this->db->bind_param_push($this->arrBind, 's', 'mobile');\n		} else {\n			$this->db->bind_param_push($this->arrBind, 's', 'all');\n			$this->db->bind_param_push($this->arrBind, 's', 'pc');\n		}\n\n		//온라인 쿠폰\n		//$this->arrWhere[] = 'c.couponKind=?';\n    //$this->db->bind_param_push($this->arrBind, 's', 'online');\n\n		$this->db->strField .= ' * ';\n		//$this->db->strField .= ' COUNT(mc.memberCouponNo) as cnt ';\n    $this->db->strWhere = implode(' AND ', gd_isset($this->arrWhere));\n    $this->db->strJoin .= ' LEFT JOIN ' . DB_COUPON . ' as c ON c.couponNo = mc.couponNo';\n\n		$query = $this->db->query_complete();\n    $strSQL = 'SELECT ' . array_shift($query) . ' FROM ' . DB_MEMBER_COUPON . ' as mc ' . implode(' ', $query);\n    $data = $this->db->query_fetch($strSQL, $this->arrBind);\n\n		//echo print_r($data);\n\n		return $data[0]['cnt'];\n	}\n</pre>",
+    content:  "어떤 회원이 가지고 있는 상품 쿠폰을 가져온다. 쿠폰의 사용 기간은 유효해야하며, 모바일과 pc의 사용 범위를 확인해야한다. 쿠폰은 사용 가능해야한다.(이미 사용한 쿠폰은 가져오지 않는다.)",
+    regDt: "2022.06.17"
 }];
