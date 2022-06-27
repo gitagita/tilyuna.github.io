@@ -357,4 +357,22 @@ export default [{
     code: "<pre>	/** \n	 * yuna\n	 * 2022.06.15.\n	 * 회원의 상품쿠폰 리스트 가져오기\n	 */	\n	public function getMemberProductCouponCnt(){\n		$memNo = \\Session::get('member.memNo');\n		\n		// 회원\n		$this->arrWhere[] = 'mc.memNo =?';\n		$this->db->bind_param_push($this->arrBind, 'i', $memNo);\n\n		// 만료기간\n		//$this->arrWhere[] = 'c.couponUsePeriodStartDate<=? AND c.couponUsePeriodEndDate>?';\n		$this->arrWhere[] = 'mc.memberCouponStartDate<=? AND mc.memberCouponEndDate>?';\n		$this->db->bind_param_push($this->arrBind, 's', date('Y-m-d H:i:s'));\n        $this->db->bind_param_push($this->arrBind, 's', date('Y-m-d H:i:s'));\n\n		// 쿠폰사용가능 여부\n		$this->arrWhere[] = 'mc.memberCouponState ='y'';\n\n		// 상품 쿠폰\n        $this->arrWhere[] = 'c.couponUseType=?';\n        $this->db->bind_param_push($this->arrBind, 's', 'product');\n\n\n		// 사용범위?PC+모바일(‘a’),PC(‘p’),모바일(‘m’)\n        $this->arrWhere[] = '(c.couponDeviceType in (?,?))';\n\n		if (Request::isMobile()) { // 모바일 접속 여부\n			$this->db->bind_param_push($this->arrBind, 's', 'all');\n			$this->db->bind_param_push($this->arrBind, 's', 'mobile');\n		} else {\n			$this->db->bind_param_push($this->arrBind, 's', 'all');\n			$this->db->bind_param_push($this->arrBind, 's', 'pc');\n		}\n\n		//온라인 쿠폰\n		//$this->arrWhere[] = 'c.couponKind=?';\n    //$this->db->bind_param_push($this->arrBind, 's', 'online');\n\n		$this->db->strField .= ' * ';\n		//$this->db->strField .= ' COUNT(mc.memberCouponNo) as cnt ';\n    $this->db->strWhere = implode(' AND ', gd_isset($this->arrWhere));\n    $this->db->strJoin .= ' LEFT JOIN ' . DB_COUPON . ' as c ON c.couponNo = mc.couponNo';\n\n		$query = $this->db->query_complete();\n    $strSQL = 'SELECT ' . array_shift($query) . ' FROM ' . DB_MEMBER_COUPON . ' as mc ' . implode(' ', $query);\n    $data = $this->db->query_fetch($strSQL, $this->arrBind);\n\n		//echo print_r($data);\n\n		return $data[0]['cnt'];\n	}\n</pre>",
     content:  "어떤 회원이 가지고 있는 상품 쿠폰을 가져온다. 쿠폰의 사용 기간은 유효해야하며, 모바일과 pc의 사용 범위를 확인해야한다. 쿠폰은 사용 가능해야한다.(이미 사용한 쿠폰은 가져오지 않는다.)",
     regDt: "2022.06.17"
+},
+{
+    id: 41,
+    type: "diary",
+    key:"고도몰",
+    title: "실수 후 대처",
+    code: "<pre></pre>",
+    content:  "<h3>내가 한 실수</h3>이전에 만든 프로세스에 오류가 발견되어 야근을 했다. 회원이 구매확정했을 때 구매 금액에서 마일리지 지급 비율만큼 곱해서 지급하는 프로세스였다. 내가 한 실수는 구매 금액에 마일리지 지급 비율을 곱한 후 동일 상품 구매 개수를 곱한 것이다. 이미 구매 금액에 동일상품 개수도 곱해져 있는데 내가 거기에 상품 개수를 곱했으니 회원에게 마일리지를 더 지급해버린 것 이다. <br/>고도몰에서 구매확정했을 때 Order.php컴포넌트의 statusChangeCodeS($orderNo, $arrData)함수를 타는데 $arrData에 있는 sno값이 DB의 es_orderGoods의 sno이다. es_OrderGoods는 주문한 상품 또는 옵션 이 하나의 행이 되고, 만약 동일 상품 또는 옵션을 여러개 구매한 경우 한 행의 goodsCnt가 그 개수가 된다.<br/> es_orderGoods에서 realTaxSupplyGoodsPrice+realTaxVatGoodsPrice+realTaxFreeGoodsPrice를 더하면 해당 상품에 대한 개수도 곱해져 있는 실제 구매 금액이다.<br/><br/><h3>대처방법</h3>1.DB에 있는 내용 excel로 정리하기 <br/><a class='hangul' href='https://blog.naver.com/PostView.naver?blogId=lsw3210&logNo=221581987792&redirect=Dlog&widgetTypeCall=true&directAccess=false'>1-1.DB의 내용 excel로 내보내기(click!!)</a><br/><a class='hangul' href='https://moguwai.tistory.com/entry/phpmyadmin%EC%97%90%EC%84%9C-excel%EB%A1%9C-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EC%B6%94%EC%B6%9C%ED%95%98%EA%B8%B0'>1-2.excel형식 만들기(click!!)</a><br/><br/> 2. 실수한 부분 정리하기 <br/> 3. 파일 정리해서 전달 <br/> 4. 처리할 부분 안내 받고 처리하기",
+    regDt: "2022.06.22"
+},
+{
+    id: 42,
+    type: "tip",
+    key:"고도몰",
+    title: "$this->getView()",
+    code: "<pre>if($getValue['mode'] == 'data') {\n	$this->getView()->setPageName('dbk/dbk_goods_list.php');\n} else {\n	$this->getView()->setDefine('goodsTemplate', 'dbk/dbk_goods_list.html');\n}\n</pre>",
+    content:  "해당 Controller를 어느 파일로 보이게 할지 정하는 함수.  else문의 경우에는 헤당 파일을 goodsTemplate로 선언한 것이다. 프론트 쪽에서는 {#goodsTemplate}아 같이 사용할 수 있다.",
+    regDt: "2022.06.20"
 }];
