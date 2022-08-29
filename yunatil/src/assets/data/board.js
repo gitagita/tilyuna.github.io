@@ -384,4 +384,31 @@ export default [{
     code: "&lt;div class='comment-write js-form-write'&gt;<br/>	&lt;form id='dbkForm0in' method='post' action='./dbk_event_ps.php' enctype='multipart/form-data'&gt;<br/>&nbsp;&nbsp;&lt;input type='hidden' name='mode' value='dbk_reply_insert'/&gt;<br/>&nbsp;&nbsp;&lt;input type='hidden' name='eventSno' value='{=eventSno}'/&gt;<br/>&nbsp;&nbsp;&lt;input type='hidden' name='depth' value='1'/&gt;<br/>&nbsp;&lt;label&gt;<br/>&nbsp;&nbsp;&nbsp;&lt;input type='checkbox' name='isSecretReply' value='y'/&gt;<br/>&nbsp;&nbsp;&nbsp;비밀댓글<br/>	&nbsp;&lt;/label&gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br/>	&nbsp;&lt;div class='comment-write_list'&gt;<br/>&nbsp;&nbsp;&nbsp;&lt;textarea type='text' name='memo' class='text' placeholder='내용을 입력해주세요. (최대 xx자)'&gt;&lt;/textarea&gt;<br/>&nbsp;&nbsp;&nbsp;&lt;button type='button' class='comment-write_submit js-comment-btn-write' data-type='in' data-sno='0'&gt;확인&lt;/button&gt;<br/>&nbsp;&lt;/div&gt;<br/>&lt;!--{ ? dbkEmojiList }--&gt;<br/>&lt;ul&gt;<br/>	&nbsp;&lt;!--{ @ dbkEmojiList }--&gt;<br/>	&nbsp;&nbsp;&nbsp;&lt;li&gt;<br/>	&nbsp;&nbsp;&nbsp;&nbsp;&lt;label&gt;<br/>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;input type='checkbox' name='emojiSno' value='{.sno}' /&gt;<br/>	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;img src='../data/etc/{.emojiIcon}' style='width:50px;'/&gt;<br/>	&nbsp;&nbsp;&nbsp;&nbsp;&lt;/label&gt;<br/>	&nbsp;&nbsp;&nbsp;&lt;/li&gt;<br/>	&nbsp;&nbsp;&lt;!--{ / }--&gt;<br/>		&lt;/ul&gt;<br/>&nbsp;&lt;!--{ / }--&gt;<br/>	&nbsp;&lt;input type='file' name='saveFile'/&gt;<br/>	&lt;/form&gt;<br/>&lt;/div&gt;<br/><br/><br/><br/>&lt;script&gt;<br/>$(document).ready(function(){<br/>	$('input[name=\\'emojiSno\\']').on('click', function(){<br/>		//다른 곳에서도 name='emojiSno'를 사용해서 클릭한 element의 부모의 div의 name='emojiSno'에 대해서만 동작하도록<br/>		const $parentsDiv = $(this).closest('div');<br/><br/>&nbsp;&nbsp;if($(this).is(':checked')) {<br/>&nbsp;&nbsp;&nbsp;//선택 해제 할 때 prop를 사용하면 전제 선택 해제가 되지 않음<br/>&nbsp;&nbsp;&nbsp;//<br/>	&nbsp;&nbsp;$parentsDiv.find('input[name=\\'emojiSno\\']').attr('checked', false);<br/>	&nbsp;&nbsp;$(this).prop('checked', true);<br/>	&nbsp;} else {<br/>&nbsp;&nbsp;&nbsp;$parentsDiv.find('input[name=\\'emojiSno\\']').attr('checked', false);<br/>	&nbsp;}<br/>&nbsp;});<br/>});<br/>&lt;/script&gt;<br/>",
     content:  "게시글 댓글에 이모지를 선택할 수 있는 기능이다. 이모지는 필수가 아니므로 checkbox로 구현했고, 한가지만 선택할 수 있으므로 이미 체크되어 있는 것이 있으면 전체 해제 후 클릭 한 것을 체크하도록 프로세스를 구현했다. <br/> 이슈는 prop로 했을 때 전체해제가 동작하지 않았다는 점이었다. input의 상태를 확인해보니 checkbox 기본 기능대로 동작하고 있었다. prop 대신 속성을 추가하는 메서드 attr를 사용하니 잘 작동했다.",
     regDt: "2022.07.30"
+},
+{
+    id: 44,
+    type: "tip",
+    key:"php",
+    title: "날짜 형식 변환",
+    code: "$regDate = date_format(date_create($regDt), 'Y.m.d');",
+    content: "",
+    regDt: "2022.08.29"
+},
+{
+    id: 45,
+    type: "tip",
+    key:"jquery",
+    title: "iframe 내 요소에 접근하는 방법",
+    code: "$iframe = $('#my_iframe').contents().find('#someID').html();<br/><br/><.IFRAME id='my_iframe' NAME='my_iframe' SRC='test.html'><./IFRAME>",
+    content: "iframe내에 있는 요소에 접근하는 경우에는 다음과 같은 방법을 사용해야한다.",
+    regDt: "2022.08.29"
+},
+{
+    id: 46,
+    type: "dev",
+    key:"sql",
+    title: "자체상품코드 자리수 & 상품명 비교에 따른 동일상품",
+    code: "SUBSTRING_INDEX(g.goodsNm,'(',1) = SUBSTRING_INDEX('\".$goodsView['goodsNm'].\"','(', 1)\n\n\nSUBSTRING(g.goodsCd,5,6) = SUBSTRING('\".$goodsView['goodsCd'].\"',5,6)  and g.goodsCd !='' ",
+    content: "첫번쨰는 상품명 비교로 여는 소괄호 전에 있는 값이 같은 경우를 동일상품으로 본다.<br/><br/> 두 번째는 자체상품코드 5번째자리부터 6개의 자리수만큼의 값을 비교한다. 즉, 5자리부터 10자리 값을 비교한다는 의미이다.",
+    regDt: "2022.08.29"
 }];
