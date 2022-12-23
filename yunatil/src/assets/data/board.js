@@ -411,4 +411,40 @@ export default [{
     code: "SUBSTRING_INDEX(g.goodsNm,'(',1) = SUBSTRING_INDEX('\".$goodsView['goodsNm'].\"','(', 1)\n\n\nSUBSTRING(g.goodsCd,5,6) = SUBSTRING('\".$goodsView['goodsCd'].\"',5,6)  and g.goodsCd !='' ",
     content: "첫번쨰는 상품명 비교로 여는 소괄호 전에 있는 값이 같은 경우를 동일상품으로 본다.<br/><br/> 두 번째는 자체상품코드 5번째자리부터 6개의 자리수만큼의 값을 비교한다. 즉, 5자리부터 10자리 값을 비교한다는 의미이다.",
     regDt: "2022.08.29"
+},
+{
+    id: 47,
+    type: "tip",
+    key:"고도몰",
+    title: "dim 없애는 스크립트",
+    code: "$('.dbk_set_my_size_popup, #layerDim').addClass('dn');\n    $('body, html').css('overflow', 'visible');",
+    content: "고도몰에서 팝업 등을 열때 생기는 dim 배경을 없앨 때 사용하는 스크립트",
+    regDt: "2022.09.20"
+},
+{
+    id: 48,
+    type: "tip",
+    key:"고도몰",
+    title: "관리자에서 팝업 열기",
+    code: "window.open(dbkTemplatePopup, '메거진 템플릿', 'width=1000px,height=800px,scrollbars=no');\n$this->getView()->setDefine('layout', 'layout_blank.php');",
+    content: "첫 번째 줄은 관리자에서 팝업을 열떄 사용하는 함수, 두 번째 줄은 팝업에서 메뉴 노출되는 부분을 없앨 때 사용",
+    regDt: "2022.09.20"
+},
+{
+    id: 49,
+    type: "error",
+    key:"cafe24",
+    title: "Access-Control-Allow-Origin * 관련 오류",
+    code: "<'IfModule mod_headers.c>\n    Header set Access-Control-Allow-Origin '*'\n<'/IfModule>",
+    content: ".htaccess 파일에 아래 소스코드를 추가하여 해결할 수 있다. 해당 파일에서는 디렉터리에 대한 옵션을 설정할 수 있다.",
+    regDt: "2022.10.04"
+},
+{
+    id: 50,
+    type: "error",
+    key:"cafe24",
+    title: "서버오류: api 호출 시 쓰레드가 계속 생성되는 오류",
+    code: "[mpm_prefork:info] [pid 32410] AH00162: server seems busy, (you may need to increase StartServers, or Min/MaxSpareServers), spawning 8 children, there are 3 idle, and 265 total children\n[core:notice] [pid 32410] AH00052: child pid 32416 exit signal Segmentation fault (11)",
+    content: "api.php에 있는 url 경로와 web.php에 있는 url 경로 중 겹치는 것이 있어 생긴 오류. 동일한 url이 있으면 안된다.<br/><br/> 해결방법: api.php.에서 호출하는 url 앞에 /api를 추가했다.",
+    regDt: "2022.10.04"
 }];
